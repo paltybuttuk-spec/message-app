@@ -14,3 +14,9 @@ Same layout as your message-generator repo: `index.html`, `manifest.json`, `sw.j
 
 ## Offline
 Shell is cached by `sw.js` (works offline after the first open); chats and recent messages are cached; unsent messages queue and send on reconnect.
+
+## Same-phone link with MsgGen + notifications
+- Host both apps under the same account (`<user>.github.io/message-generator/` and `<user>.github.io/messenger/`). Same origin = shared storage and one notification permission.
+- MsgGen's **Send to Messenger app (this phone)** puts the text in a shared inbox and shows a notification; tapping it opens Messenger's "From MsgGen" list where you pick the chat. Works with no internet; delivery to the server happens when back online.
+- **Push from the server** (works with the app closed): the backend generates VAPID keys on first run (stored in its database) and pushes every new message to the recipient's subscribed devices. Tap the 🔔 in Messenger once (or any first tap after login) to allow notifications.
+- Building the Messenger APK on pwabuilder.com: turn on **Notification delegation** in the Android options (MsgGen already has it).
